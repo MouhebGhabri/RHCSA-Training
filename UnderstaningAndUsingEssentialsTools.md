@@ -460,7 +460,6 @@ For example, you can delete the directory `/tmp/mydir` with the command `rm -r /
 4. Go back to the previous directory with `cd ..`.
 5. Delete the `files` directory by using `rmdir files`. This will only work if the directory is empty.
 6. To remove a non-empty directory, you can use `rm -r files`. Be sure to confirm that the directory contains no important files before doing this.
-```
 
 ## Understanding Hard Links
 
