@@ -1,4 +1,4 @@
-Here's a summarized version of the "Basic Shell Skills" chapter in markdown format for a `README.md` file, with all relevant commands included:
+Here's the corrected version of the "Basic Shell Skills" chapter in markdown format for a `README.md` file, with all relevant commands included:
 
 ```md
 # **RHCSA (EX200) TRAINING**
@@ -11,17 +11,17 @@ The shell is the default working environment for a Linux administrator. Bash is 
 
 A command typically consists of:
 - The **command** itself (e.g., `ls` to list files).
-- **Options** modify the behavior of the command (e.g., `ls -l` shows long listing).
-- **Arguments** target specific files or directories (e.g., `ls -l /etc`).
+- **Options** that modify the behavior of the command (e.g., `ls -l` shows long listing).
+- **Arguments** that target specific files or directories (e.g., `ls -l /etc`).
 
 Command example:
 ```bash
 ls -l /etc
 ```
 
-This command has two arguments:
+This command has two parts:
 - `-l`: An option that modifies the command.
-- `/etc`: The target where the command operates.
+- `/etc`: The target directory where the command operates.
 
 ### **Executing Commands**
 
@@ -161,20 +161,19 @@ ls <Tab>
    ```bash
    ls <Tab>
    ```
-```
 
-## Editing Files with `vim`
+## **Editing Files with `vim`**
 
-Linux system administration often requires editing configuration files, and the most widely available text editor for this is `vi` or its improved version, `vim`. While `vim` offers many enhancements, such as syntax highlighting, its basic commands are identical to `vi`.
+Linux system administration often requires editing configuration files, and the most widely available text editor is `vi` or its improved version, `vim`. While `vim` offers many enhancements, such as syntax highlighting, its basic commands are identical to `vi`.
 
-### `vim` Modes
+### **`vim` Modes**
 `vim` operates in two essential modes:
 - **Command Mode**: For issuing commands.
 - **Input Mode**: For editing the file's contents.
 
 Switch between these modes as needed for your tasks.
 
-### Essential `vim` Commands
+### **Essential `vim` Commands**
 The following commands are essential when using `vim`:
 - **i**: Enter Input Mode.
 - **Esc**: Exit Input Mode and return to Command Mode.
@@ -186,7 +185,7 @@ The following commands are essential when using `vim`:
 
 To practice these commands, follow **Exercise 2-5** where you will create and edit a file using `vim`.
 
-## Understanding the Shell Environment
+## **Understanding the Shell Environment**
 
 A shell environment consists of variables that define the user environment. Examples include:
 - `$PATH`: Defines directories to search for executable files.
@@ -194,12 +193,12 @@ A shell environment consists of variables that define the user environment. Exam
 
 To view the current environment variables, use the `env` command. To modify a variable temporarily, you can assign it a new value, e.g., `LANG=es_ES.UTF-8`.
 
-### Exercise: Shell Environment Practice
+### **Exercise: Shell Environment Practice**
 1. Open a shell and type `echo $LANG` to display your current language setting.
 2. Temporarily change the language by typing `LANG=es_ES.UTF-8`.
 3. Open `.bashrc` and add a new variable (e.g., `COLOR=red`).
 
-## Finding Help on Linux
+## **Finding Help on Linux**
 
 Hundreds of commands are available on Linux, but it's impractical to memorize them all. Instead, focus on how to find the help you need:
 - **--help**: Display a usage summary for a command.
@@ -207,11 +206,10 @@ Hundreds of commands are available on Linux, but it's impractical to memorize th
 - **apropos** or `man -k`: Search for commands based on a keyword.
 - **info**: Provides hierarchical documentation for commands.
 
-### Exercise: Using `man` Pages
+### **Exercise: Using `man` Pages**
 1. Search for `man -k partition` to find commands related to partitions.
 2. Use `grep` to filter results by specific sections, e.g., `man -k partition | grep 8`.
 
-### Tip
+### **Tip**
 To ensure up-to-date `man` pages, periodically run `mandb` to update the `mandb` database.
-
-
+```
