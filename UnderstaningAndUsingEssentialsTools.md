@@ -212,7 +212,6 @@ Hundreds of commands are available on Linux, but it's impractical to memorize th
 To ensure up-to-date `man` pages, periodically run `mandb` to update the `mandb` database.
 
 
-```markdown
 # Working with the File System Hierarchy
 
 To manage a Linux system, you should be familiar with the default directories that exist on almost all Linux systems. This section describes these directories and explains how mounts are used to compose the file system hierarchy.
