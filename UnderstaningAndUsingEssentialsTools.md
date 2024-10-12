@@ -461,9 +461,6 @@ For example, you can delete the directory `/tmp/mydir` with the command `rm -r /
 5. Delete the `files` directory by using `rmdir files`. This will only work if the directory is empty.
 6. To remove a non-empty directory, you can use `rm -r files`. Be sure to confirm that the directory contains no important files before doing this.
 ```
-Here’s a refined version of your content on understanding hard links, symbolic links, and managing archives in Linux, focusing on clarity and organization:
-
----
 
 ## Understanding Hard Links
 
