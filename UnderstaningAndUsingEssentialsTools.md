@@ -678,83 +678,308 @@ tar -czvf archivename.tar.gz /files-to-archive
    ```bash
    tar xvf etc.tar -C /tmp etc/passwd
    ```
-
 # Using Common Text File–Related Tools
 
-Before discussing how to find specific text in files, it's important to display text files efficiently. 
+Before we start talking about the best possible way to find text files containing specific text, let’s take a look at how you can display text files in an efficient way. Table 4-2 provides an overview of some common commands often used for this purpose.
 
-## Essential Tools for Managing Text File Contents
+## Table 4-2 Essential Tools for Managing Text File Contents
 
-| Command | Description |
-|---------|-------------|
-| `less`  | Opens files in a pager for easy reading. |
-| `cat`   | Displays file contents directly in the terminal. |
-| `head`  | Shows the first ten lines of a file. |
-| `tail`  | Displays the last ten lines of a file; use `-f` to monitor log files. |
-| `cut`   | Filters specific fields from a file. |
-| `sort`  | Sorts lines in a file. |
-| `wc`    | Counts lines, words, and characters in a file. |
+Apart from their use on a text file, these commands may also prove very useful when used with pipes. You can use the command `less /etc/passwd`, for example, to open the contents of the `/etc/passwd` file in the less pager, but you can also use the command `ps aux | less`, which sends the output of the command `ps aux` to the less pager to allow for easy reading.
 
-## Using `less`
-To read files, use:
-```bash
-less /etc/passwd
+## Doing More with less
+
+In many cases, as a Linux administrator, you’ll need to read the contents of text files. The `less` utility offers a convenient way to do so. To open the contents of a text file in less, just type `less` followed by the name of the file you want to see, as in `less /etc/passwd`.
+
+From less, you can use the Page Up and Page Down keys on your keyboard to browse through the file contents. Seen enough? Then you can press `q` to quit less. Also very useful is that you can easily search for specific contents in less using `/sometext` for a forward search and `?sometext` for a backward search. Repeat the last search by using `n`.
+
+If you think this sounds familiar, it should. You have seen similar behavior in `vim` and `man`. The reason is that all of these commands are based on the same code.
+
+**Note**  
+Once upon a time, less was developed because it offered more features than the classical UNIX tool `more` that was developed to go through file contents page by page. So, the idea was to do more with less. Developers did not like that, so they enhanced the features of the `more` command as well. The result is that both `more` and `less` offer many features that are similar, and which tool you use doesn’t really matter that much anymore. 
+
+There is one significant difference, though, and that is the `more` utility ends if the end of the file is reached. To prevent this behavior, you can start more with the `-p` option. Another difference is that the `more` tool is a standard part of any Linux and UNIX installation. This is not the case for `less`, which may have to be installed separately.
+
+## Exercise 4-1: Applying Basic less Skills
+
+1. From a terminal, type `less /etc/passwd`. This opens the `/etc/passwd` file in the less pager.
+2. Type `/root` to look for the text `root`. You’ll see that all occurrences of the text `root` are highlighted.
+3. Press `G` to go to the last line in the file.
+4. Press `q` to quit less.
+5. Type `ps aux | less`. This sends the output of the `ps aux` command (which shows a listing of all processes) to less. Browse through the list.
+6. Press `q` to quit less.
+
+## Showing File Contents with cat
+
+The `less` utility is useful to read long text files. If a text file is not that long, you are probably better off using `cat`. This tool just dumps the contents of the text file on the terminal it was started from. This is convenient if the text file is short. If the text file is long, however, you’ll see all contents scrolling by on the screen, and only the lines that fit on the terminal screen are displayed.
+
+Using `cat` is simple. Just type `cat` followed by the name of the file you want to see. For instance, use `cat /etc/passwd` to show the contents of this file on your computer screen.
+
+**Tip**  
+The `cat` utility dumps the contents of a file to the screen from the beginning to the end, which means that for a long file you’ll see the last lines of the file only. If you are interested in the first lines, you can use the `tac` utility, which gives the inversed result of `cat`.
+
+## Displaying the First or Last Lines of a File with head and tail
+
+If a text file contains much information, it can be useful to filter the output a bit. You can use the `head` and `tail` utilities to do that. Using `head` on a text file will show by default the first ten lines of that file. Using `tail` on a text file shows the last ten lines by default. You can adjust the number of lines that are shown by adding `-n` followed by the number you want to see. So, `tail -n 5 /etc/passwd` shows the last five lines of the `/etc/passwd` file.
+
+**Tip**  
+With older versions of `head` and `tail`, you had to use the `-n` option to specify the number of lines you wanted to see. With current versions of both utilities, you may also omit the `-n` option. So, using either `tail -5 /etc/passwd` or `tail -n 5 /etc/passwd` gives you the exact same results.
+
+Another useful option that you can use with `tail` is `-f`. This option starts by showing you the last ten lines of the file you’ve specified, but it refreshes the display as new lines are added to the file. This is convenient for monitoring log files. The command `tail -f /var/log/messages` (which has to be run as the root user) is a common command to show in real time messages that are written to the main log file `/var/log/messages`. To end this command, press `Ctrl-C`.
+
+By combining `tail` and `head`, you can do smart things as well. Suppose, for instance, that you want to see line number 11 of the `/etc/passwd` file. To do that, use `head -n 11 /etc/passwd | tail -n 1`. The command before the pipe shows the first 11 lines from the file. The result is sent to the pipe, and on that result, `tail -n 1` is used, which leads to only line number 11 being displayed.
+
+## Exercise 4-2: Using Basic head and tail Operations
+
+1. From a root shell, type `tail -f /var/log/messages`. You’ll see the last lines of `/var/log/messages` being displayed. The file doesn’t close automatically.
+2. Press `Ctrl-C` to quit the previous command.
+3. Type `head -n 5 /etc/passwd` to show the first five lines in `/etc/passwd`.
+4. Type `tail -n 2 /etc/passwd` to show the last two lines of `/etc/passwd`.
+5. Type `head -n 5 /etc/passwd | tail -n 1` to show only line number 5 of the `/etc/passwd` file.
 ```
-- **Navigation**: Use Page Up/Down, `/sometext` to search forward, and `?sometext` to search backward.
-- **Quitting**: Press `q`.
 
-## Using `cat`
-For short files, use:
-```bash
-cat /etc/passwd
-```
-- **Tip**: For reversed output, use `tac`.
+# Filtering Specific Columns with cut
 
-## Using `head` and `tail`
-- To view the first five lines:
-```bash
-head -n 5 /etc/passwd
-```
-- To view the last two lines:
-```bash
-tail -n 2 /etc/passwd
-```
-- Monitor logs:
-```bash
-tail -f /var/log/messages
-```
+When you’re working with text files, it can be useful to filter out specific fields. Imagine that you need to see a list of all users in the `/etc/passwd` file. In this file, several fields are defined, of which the first contains the name of the users who are defined. To filter out a specific field, the `cut` command is useful. To do this, use the `-d` option to specify the field delimiter followed by `-f` with the number of the specific field you want to filter out. So, the complete command is:
 
-## Filtering with `cut`
-To filter specific fields (e.g., usernames from `/etc/passwd`):
 ```bash
 cut -d : -f 1 /etc/passwd
 ```
 
-## Sorting with `sort`
-To sort contents:
+if you want to filter out the first field of the `/etc/passwd` file. You can see the result in **Example 4-1**.
+
+## Example 4-1 Filtering Specific Fields with cut
+
+```bash
+[root@localhost ~]# cut -d : -f 1 /etc/passwd
+root
+bin
+daemon
+adm
+lp
+sync
+shutdown
+halt
+...
+```
+
+# Sorting File Contents and Output with sort
+
+Another very useful command to use on text files is `sort`. As you can probably guess, this command sorts text. If you type:
+
 ```bash
 sort /etc/passwd
 ```
-- For numeric sorting:
+
+for instance, the content of the `/etc/passwd` file is sorted in byte order. You can use the `sort` command on the output of a command also, as in:
+
+```bash
+cut -f 1 -d : /etc/passwd | sort
+```
+
+which sorts the contents of the first column in the `/etc/passwd` file.
+
+By default, the `sort` command sorts in byte order, which is the order that the characters appear in the ASCII text table. Notice that this looks like alphabetical order, but it is not, as all capital letters are shown before lowercase letters. So `Zoo` would be listed before `apple`. In some cases, that is not convenient because the content that needs sorting may be numeric or in another format. The `sort` command offers different options to help sort these specific types of data. Type, for instance:
+
 ```bash
 cut -f 3 -d : /etc/passwd | sort -n
 ```
 
-## Counting with `wc`
-Count lines, words, and characters:
+to sort the third field of the `/etc/passwd` file in numeric order. It can be useful also to sort in reverse order; if you use the command:
+
+```bash
+du -h | sort -rn
+```
+
+you get a list of files sorted with the biggest file in that directory listed first.
+
+You can also use the `sort` command and specify which column you want to sort. To do this, use:
+
+```bash
+sort -k3 -t : /etc/passwd
+```
+
+for instance, which uses the field separator `:` to sort the third column of the `/etc/passwd` file. Add `-n` to the command to sort in a numeric order, and not in an alphabetic order.
+
+Another example is shown below, where the output of the `ps aux` command is sorted. This command gives an overview of processes running on a Linux system. The fourth column indicates memory usage, and by applying a numeric sort to the output of the command you can see that the processes are sorted by memory usage, such that the process that consumes the most memory is listed last.
+
+## Example 4-2 Using ps aux to Find the Busiest Processes on a Linux Server
+
+```bash
+[root@localhost ~]# ps aux | sort -k 4 -n
+root         897  0.3  1.1 348584 42200 ?
+student     2657  1.0  1.1 2936188 45200 ?
+student     2465  0.3  1.3 143976 52644 ?
+student     2660  1.9  1.4 780200 53412 ?
+root        2480  2.1  1.6 379000 61568 ?
+student     2368  0.9  1.6 1057048 61096 ?
+root        1536  0.6  1.8 555908 69916 ?
+student     2518  0.6  1.8 789408 70336 ?
+student     2540  0.5  1.8 641720 68828 ?
+student     2381  4.7  1.9 1393476 74756 ?
+student     2000 16.0  7.8 3926096 295276 ?
+```
+
+# Counting Lines, Words, and Characters with wc
+
+When working with text files, you sometimes get a large amount of output. Before deciding which approach to handling the large amount of output works best in a specific case, you might want to have an idea about the amount of text you are dealing with. In that case, the `wc` command is useful. In its output, this command gives three different results: the number of lines, the number of words, and the number of characters.
+
+Consider, for example, the `ps aux` command. When executed as root, this command gives a list of all processes running on a server. One solution to count how many processes there are exactly is to pipe the output of `ps aux` through `wc`, as in:
+
 ```bash
 ps aux | wc
 ```
 
-## Regular Expressions
-Regular expressions (regex) allow flexible text searching.
-- **Anchors**: Use `^` for start and `$` for end.
-- **Escaping**: Quote regex patterns to prevent shell interpretation.
+You can see the result of the command in **Example 4-3**, which shows that the total number of lines is 90 and that there are 1,045 words and 7,583 characters in the command output.
 
-## Wildcards and Multipliers
-- `.` matches any character (e.g., `r.t` matches rat, rot, rut).
-- `[aou]` matches any character in the set.
-- `*` matches zero or more of the preceding character.
-- `{n}` matches exactly n occurrences.
+## Example 4-3 Counting the Number of Lines, Words, and Characters with wc
 
+```bash
+[root@localhost ~]# ps aux | wc
+    90      1045   7583
+```
+
+# A Primer to Using Regular Expressions
+
+Working with text files is an important skill for a Linux administrator. You must know not only how to create and modify existing text files, but also how to find the text file that contains specific text.
+
+It will be clear sometimes which specific text you are looking for. Other times, it might not. For example, are you looking for `color` or `colour`? Both spellings might give a match. This is just one example of why using flexible patterns while looking for text can prove useful. These flexible patterns are known as regular expressions, often also referred to as regex in Linux.
+
+To understand regular expressions a bit better, let’s take a look at a text file example, shown in **Example 4-4**. This file contains the last six lines from the `/etc/passwd` file. (This file is used for Chapter 6, “User and Group Management,” for more details.)
+
+## Example 4-4 Sample Lines from /etc/passwd
+
+```bash
+[root@localhost ~]# tail -n 6 /etc/passwd
+anna:x:1000:1000::/home/anna:/bin/bash
+rihanna:x:1001:1001::/home/rihanna:/bin/bash
+annabel:x:1002:1002::/home/annabel:/bin/bash
+anand:x:1003:1003::/home/anand:/bin/bash
+joanna:x:1004:1004::/home/joanna:/bin/bash
+joana:x:1005:1005::/home/joana:/bin/bash
+```
+
+Now suppose that you are looking for the user `anna`. In that case, you could use the general regular expression parser `grep` to look for that specific string in the file `/etc/passwd` by using the command:
+
+```bash
+grep anna /etc/passwd
+```
+
+**Example 4-5** shows the results of that command, and as you can see, way too many results are shown.
+
+## Example 4-5 Example of Why You Need to Know About Regular Expressions
+
+```bash
+grep anna /etc/passwd 
+[root@localhost ~]# 
+anna:x:1000:1000::/home/anna:/bin/bash 
+rihanna:x:1001:1001::/home/rihanna:/bin/bash 
+annabel:x:1002:1002::/home/annabel:/bin/bash 
+joanna:x:1004:1004::/home/joanna:/bin/bash
+```
+
+A regular expression is a search pattern that allows you to look for specific text in an advanced and flexible way.
+
+## Using Line Anchors
+
+In **Example 4-5**, suppose that you wanted to specify that you are looking for lines that start with the text `anna`. The type of regular expression that specifies where in a line of output the result is expected is known as a line anchor.
+
+To show only lines that start with the text you are looking for, you can use the regular expression `^` (in this case, to indicate that you are looking only for lines where `anna` is at the beginning of the line; see **Example 4-6**).
+
+## Example 4-6 Looking for Lines Starting with a Specific Pattern
+
+```bash
+grep ^anna /etc/passwd 
+[root@localhost ~]# 
+anna:x:1000:1000::/home/anna:/bin/bash 
+annabel:x:1002:1002::/home/annabel:/bin/bash
+```
+
+Another regular expression that relates to the position of specific text in a specific line is `$`, which states that the line ends with some text. For instance, the command:
+
+```bash
+
+
+grep anna$ /etc/passwd 
+```
+
+returns lines that end with the string `anna`. For example, the last line from **Example 4-4** has the string `joanna`, and running the command results in the following:
+
+## Example 4-7 Example of a Line Ending with Specific Text
+
+```bash
+grep joanna$ /etc/passwd 
+[root@localhost ~]# 
+joanna:x:1004:1004::/home/joanna:/bin/bash 
+```
+
+# Wildcards and Regular Expressions
+
+To find text matching a certain pattern, you can use wildcards in regular expressions, which will make your search more flexible.
+
+For instance, if you want to match the first two letters of the first user, `anna`, you can use the `.` character (which means to match any character). So if you type:
+
+```bash
+grep an.. /etc/passwd 
+```
+
+the command results in:
+
+## Example 4-8 Example of Using Wildcards
+
+```bash
+grep an.. /etc/passwd 
+[root@localhost ~]# 
+anna:x:1000:1000::/home/anna:/bin/bash 
+annabel:x:1002:1002::/home/annabel:/bin/bash 
+```
+
+In this example, both matches are returned.
+
+Another example is if you want to match any line that contains a user whose name starts with `an`, followed by any character, followed by the letter `d`, you would write the command as follows:
+
+```bash
+grep an.d /etc/passwd 
+```
+
+In this case, this command does not match any lines from **Example 4-4** because there is no match for that pattern.
+
+If you want to match all users starting with `an`, you would use the wildcard `*`, which matches any number of characters. In this case, you can type:
+
+```bash
+grep an* /etc/passwd 
+```
+
+**Example 4-9** shows that this command matches every user whose name starts with `an`.
+
+## Example 4-9 Example of Matching Users
+
+```bash
+grep an* /etc/passwd 
+[root@localhost ~]# 
+anna:x:1000:1000::/home/anna:/bin/bash 
+annabel:x:1002:1002::/home/annabel:/bin/bash 
+anand:x:1003:1003::/home/anand:/bin/bash 
+```
+
+# Combining Regular Expressions
+
+You can also combine regular expressions to search for multiple patterns within a single line. Consider the command:
+
+```bash
+grep -e an -e ri /etc/passwd 
+```
+
+This command gives you all lines that contain `an` or `ri`:
+
+## Example 4-10 Example of Matching Multiple Regular Expressions
+
+```bash
+grep -e an -e ri /etc/passwd 
+[root@localhost ~]# 
+anna:x:1000:1000::/home/anna:/bin/bash 
+rihanna:x:1001:1001::/home/rihanna:/bin/bash 
+annabel:x:1002:1002::/home/annabel:/bin/bash 
+anand:x:1003:1003::/home/anand:/bin/bash 
+joanna:x:1004:1004::/home/joanna:/bin/bash 
+```
 
