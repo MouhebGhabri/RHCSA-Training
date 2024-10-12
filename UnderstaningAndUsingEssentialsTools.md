@@ -978,3 +978,61 @@ anand:x:1003:1003::/home/anand:/bin/bash
 joanna:x:1004:1004::/home/joanna:/bin/bash 
 ```
 
+
+
+## Using Escaping in Regular Expressions
+When using regular expressions, it's advisable to escape special characters to prevent the Bash shell from interpreting them. This is because characters like `*`, `$`, and `?` have specific meanings in the shell. Although escaping isn’t always necessary, it's a good practice to place regular expressions in quotes. For example, instead of running:
+
+```bash
+grep ^anna /etc/passwd
+```
+
+you should use:
+
+```bash
+grep '^anna' /etc/passwd
+```
+
+## Using Wildcards and Multipliers
+Wildcards and multipliers help when you're unsure of the exact text format you’re searching for. The dot (`.`) serves as a wildcard for one specific character. For example, `r.t` matches `rat`, `rot`, and `rut`. To specify a range of characters, you can use brackets, e.g., `r[aou]t` matches `rat`, `rot`, and `rut`, but not `rit` or `ret`.
+
+The multiplier `*` matches zero or more of the previous character. If you want to specify an exact number of occurrences, use `{n}`. For instance, `re{2}d` matches `reed`, but not `red`. The `?` operator matches zero or one occurrence of the previous character.
+
+### Table 4-3: Most Significant Regular Expressions
+
+| Pattern | Description                          |
+|---------|--------------------------------------|
+| `.`     | Matches any single character         |
+| `[aou]` | Matches any one character in the set |
+| `*`     | Matches zero or more of the previous character |
+| `{n}`   | Matches exactly n occurrences        |
+| `?`     | Matches zero or one of the previous character |
+
+## Using Extended Regular Expressions
+Regular expressions have two sets: basic and extended. Basic regular expressions are supported by tools like `grep`, while extended ones require the `-E` option. For example, the `+` operator (in extended regex) looks for one or more occurrences of the preceding character, while `?` looks for zero or one occurrence.
+
+### Example
+To illustrate an extended regex, consider the expression `"/web(/.*)?"` from the `semanage-fcontext` man page. Here, `/web` can be followed by `(/.*)?`, where `?` indicates the preceding group may appear zero or one time. Thus, it matches just `/web`, `/web/`, or `/web/somefile`.
+
+### Practical Example
+1. Create a file named `regex.txt` with the following contents:
+   ```
+   bat
+   boot
+   boat
+   bt
+   ```
+2. Use the command to find lines starting with `b` and ending with `t`:
+   ```bash
+   grep 'b.*t' regex.txt
+   ```
+3. Attempt using the extended regex without options:
+   ```bash
+   grep 'b.+t' regex.txt
+   ```
+   This won’t return results as `grep` doesn't recognize the extended regex by default.
+4. Use the `-E` option for extended regex:
+   ```bash
+   grep -E 'b.+t' regex.txt
+   ```
+   Now it functions as expected.
