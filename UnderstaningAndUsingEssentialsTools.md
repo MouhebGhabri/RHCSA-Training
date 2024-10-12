@@ -678,3 +678,83 @@ tar -czvf archivename.tar.gz /files-to-archive
    ```bash
    tar xvf etc.tar -C /tmp etc/passwd
    ```
+
+# Using Common Text File–Related Tools
+
+Before discussing how to find specific text in files, it's important to display text files efficiently. 
+
+## Essential Tools for Managing Text File Contents
+
+| Command | Description |
+|---------|-------------|
+| `less`  | Opens files in a pager for easy reading. |
+| `cat`   | Displays file contents directly in the terminal. |
+| `head`  | Shows the first ten lines of a file. |
+| `tail`  | Displays the last ten lines of a file; use `-f` to monitor log files. |
+| `cut`   | Filters specific fields from a file. |
+| `sort`  | Sorts lines in a file. |
+| `wc`    | Counts lines, words, and characters in a file. |
+
+## Using `less`
+To read files, use:
+```bash
+less /etc/passwd
+```
+- **Navigation**: Use Page Up/Down, `/sometext` to search forward, and `?sometext` to search backward.
+- **Quitting**: Press `q`.
+
+## Using `cat`
+For short files, use:
+```bash
+cat /etc/passwd
+```
+- **Tip**: For reversed output, use `tac`.
+
+## Using `head` and `tail`
+- To view the first five lines:
+```bash
+head -n 5 /etc/passwd
+```
+- To view the last two lines:
+```bash
+tail -n 2 /etc/passwd
+```
+- Monitor logs:
+```bash
+tail -f /var/log/messages
+```
+
+## Filtering with `cut`
+To filter specific fields (e.g., usernames from `/etc/passwd`):
+```bash
+cut -d : -f 1 /etc/passwd
+```
+
+## Sorting with `sort`
+To sort contents:
+```bash
+sort /etc/passwd
+```
+- For numeric sorting:
+```bash
+cut -f 3 -d : /etc/passwd | sort -n
+```
+
+## Counting with `wc`
+Count lines, words, and characters:
+```bash
+ps aux | wc
+```
+
+## Regular Expressions
+Regular expressions (regex) allow flexible text searching.
+- **Anchors**: Use `^` for start and `$` for end.
+- **Escaping**: Quote regex patterns to prevent shell interpretation.
+
+## Wildcards and Multipliers
+- `.` matches any character (e.g., `r.t` matches rat, rot, rut).
+- `[aou]` matches any character in the set.
+- `*` matches zero or more of the preceding character.
+- `{n}` matches exactly n occurrences.
+
+
