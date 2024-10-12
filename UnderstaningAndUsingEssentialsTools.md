@@ -1,6 +1,5 @@
 
 
-# **RHCSA (EX200) TRAINING**
 
 ## **Basic Shell Skills**
 
@@ -357,9 +356,7 @@ umount /mnt/mydisk
 ```
 ```
 
-Here's your text formatted in Markdown:
 
-```markdown
 # Managing Files
 
 As an administrator, you need to be able to perform common file management tasks. These tasks include the following:
