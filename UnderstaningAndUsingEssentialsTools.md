@@ -162,3 +162,56 @@ ls <Tab>
    ls <Tab>
    ```
 ```
+
+## Editing Files with `vim`
+
+Linux system administration often requires editing configuration files, and the most widely available text editor for this is `vi` or its improved version, `vim`. While `vim` offers many enhancements, such as syntax highlighting, its basic commands are identical to `vi`.
+
+### `vim` Modes
+`vim` operates in two essential modes:
+- **Command Mode**: For issuing commands.
+- **Input Mode**: For editing the file's contents.
+
+Switch between these modes as needed for your tasks.
+
+### Essential `vim` Commands
+The following commands are essential when using `vim`:
+- **i**: Enter Input Mode.
+- **Esc**: Exit Input Mode and return to Command Mode.
+- **:w**: Write (save) the file.
+- **:q**: Quit `vim`.
+- **dd**: Delete the current line.
+- **u**: Undo the last action.
+- **:%s/old/new/g**: Replace `old` with `new` throughout the file.
+
+To practice these commands, follow **Exercise 2-5** where you will create and edit a file using `vim`.
+
+## Understanding the Shell Environment
+
+A shell environment consists of variables that define the user environment. Examples include:
+- `$PATH`: Defines directories to search for executable files.
+- `$LANG`: Specifies language settings.
+
+To view the current environment variables, use the `env` command. To modify a variable temporarily, you can assign it a new value, e.g., `LANG=es_ES.UTF-8`.
+
+### Exercise: Shell Environment Practice
+1. Open a shell and type `echo $LANG` to display your current language setting.
+2. Temporarily change the language by typing `LANG=es_ES.UTF-8`.
+3. Open `.bashrc` and add a new variable (e.g., `COLOR=red`).
+
+## Finding Help on Linux
+
+Hundreds of commands are available on Linux, but it's impractical to memorize them all. Instead, focus on how to find the help you need:
+- **--help**: Display a usage summary for a command.
+- **man**: Show detailed manual pages for commands.
+- **apropos** or `man -k`: Search for commands based on a keyword.
+- **info**: Provides hierarchical documentation for commands.
+
+### Exercise: Using `man` Pages
+1. Search for `man -k partition` to find commands related to partitions.
+2. Use `grep` to filter results by specific sections, e.g., `man -k partition | grep 8`.
+
+### Tip
+To ensure up-to-date `man` pages, periodically run `mandb` to update the `mandb` database.
+
+
