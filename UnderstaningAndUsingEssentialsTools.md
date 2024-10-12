@@ -731,7 +731,6 @@ By combining `tail` and `head`, you can do smart things as well. Suppose, for in
 3. Type `head -n 5 /etc/passwd` to show the first five lines in `/etc/passwd`.
 4. Type `tail -n 2 /etc/passwd` to show the last two lines of `/etc/passwd`.
 5. Type `head -n 5 /etc/passwd | tail -n 1` to show only line number 5 of the `/etc/passwd` file.
-```
 
 # Filtering Specific Columns with cut
 
@@ -970,8 +969,8 @@ This command gives you all lines that contain `an` or `ri`:
 ## Example 4-10 Example of Matching Multiple Regular Expressions
 
 ```bash
-grep -e an -e ri /etc/passwd 
-[root@localhost ~]# 
+ 
+[root@localhost ~]# grep -e an -e ri /etc/passwd
 anna:x:1000:1000::/home/anna:/bin/bash 
 rihanna:x:1001:1001::/home/rihanna:/bin/bash 
 annabel:x:1002:1002::/home/annabel:/bin/bash 
