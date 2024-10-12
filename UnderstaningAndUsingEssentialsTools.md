@@ -220,7 +220,6 @@ To manage a Linux system, you should be familiar with the default directories th
 
 The file system on most Linux systems is organized in a similar way. The layout of the Linux file system is defined in the Filesystem Hierarchy Standard (FHS), and this file system hierarchy is described in `man 7 file-hierarchy`. 
 
-### Table 3-2 FHS Overview
 
 Understanding **Mounts**
 
@@ -374,7 +373,7 @@ The following subsections explain how to perform these tasks.
 
 When you’re working with files, using wildcards can make your work a lot easier. A wildcard is a shell feature that helps you refer to multiple files in an easy way. 
 
-**Table 3-3: Wildcard Overview**
+
 
 ## Managing and Working with Directories
 
@@ -413,7 +412,6 @@ In Chapter 2, “Using Essential Tools,” you learned how you can use Bash comp
 
 While working with files and directories, it is useful to show the contents of the current directory. For this purpose, you can use the `ls` command. If used without arguments, `ls` shows the contents of the current directory. Some common arguments make working with `ls` easier. 
 
-**Table 3-4: ls Common Command-Line Options**
 
 **Tip:** A hidden file on Linux is a file that has a name that starts with a dot. Try the following: `touch .hidden`. Next, type `ls`. You will not see the file. Then type `ls -a`. You’ll see it.
 
@@ -676,11 +674,7 @@ tar -czvf archivename.tar.gz /files-to-archive
    ```
 # Using Common Text File–Related Tools
 
-Before we start talking about the best possible way to find text files containing specific text, let’s take a look at how you can display text files in an efficient way. Table 4-2 provides an overview of some common commands often used for this purpose.
 
-## Table 4-2 Essential Tools for Managing Text File Contents
-
-Apart from their use on a text file, these commands may also prove very useful when used with pipes. You can use the command `less /etc/passwd`, for example, to open the contents of the `/etc/passwd` file in the less pager, but you can also use the command `ps aux | less`, which sends the output of the command `ps aux` to the less pager to allow for easy reading.
 
 ## Doing More with less
 
@@ -998,7 +992,7 @@ Wildcards and multipliers help when you're unsure of the exact text format you�
 
 The multiplier `*` matches zero or more of the previous character. If you want to specify an exact number of occurrences, use `{n}`. For instance, `re{2}d` matches `reed`, but not `red`. The `?` operator matches zero or one occurrence of the previous character.
 
-### Table 4-3: Most Significant Regular Expressions
+## Most Significant Regular Expressions
 
 | Pattern | Description                          |
 |---------|--------------------------------------|
