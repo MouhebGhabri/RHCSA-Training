@@ -353,7 +353,7 @@ To unmount a file system, use the `umount` command followed by the mount point o
 ```bash
 umount /mnt/mydisk
 ```
-```
+
 
 
 # Managing Files
