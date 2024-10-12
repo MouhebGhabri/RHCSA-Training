@@ -8,7 +8,7 @@ The **Red Hat Certified System Administrator (RHCSA)** certification is an impor
 
 The RHCSA certification is highly valued by employers because it proves that you have the ability to work with Linux systems, automate tasks, secure systems, and manage network configurations. Whether you're pursuing a career in system administration, cloud computing, or DevOps, the skills covered in RHCSA are foundational.
 
-## **[Understand and use essential tools](#understand-and-use-essential-tools)**
+## **[Understand and use essential tools](UnderstaningAndUsingEssentialsTools.md)**
 
 - Access a shell prompt and issue commands with correct syntax
 - Use input-output redirection (>, >>, |, 2>, etc.)
