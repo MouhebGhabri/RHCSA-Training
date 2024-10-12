@@ -1,6 +1,5 @@
-Here's the corrected version of the "Basic Shell Skills" chapter in markdown format for a `README.md` file, with all relevant commands included:
 
-```md
+
 # **RHCSA (EX200) TRAINING**
 
 ## **Basic Shell Skills**
